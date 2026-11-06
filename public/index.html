@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore salaries, compare occupations and discover how much different jobs pay around the world.">
+  <title>OccupationPay – Explore Salaries & Careers</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #172033;
+      background: #f7f9fc;
+    }
+    header {
+      padding: 24px 8%;
+      background: white;
+      border-bottom: 1px solid #e5eaf1;
+      font-size: 23px;
+      font-weight: bold;
+    }
+    header span { color: #2563eb; }
+    main {
+      max-width: 1050px;
+      margin: 90px auto;
+      padding: 24px;
+      text-align: center;
+    }
+    h1 { font-size: clamp(36px, 6vw, 58px); }
+    main p {
+      color: #64748b;
+      font-size: 19px;
+      line-height: 1.6;
+    }
+    .search {
+      margin: 35px auto;
+      max-width: 600px;
+      display: flex;
+      gap: 10px;
+    }
+    input {
+      flex: 1;
+      min-width: 0;
+      padding: 17px;
+      border: 1px solid #dbe2ec;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    button {
+      padding: 17px 24px;
+      background: #2563eb;
+      color: white;
+      border: 0;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+  <header>Occupation<span>Pay</span></header>
+  <main>
+    <h1>Discover What Every Job Pays</h1>
+    <p>Explore salaries, compare careers and discover earning potential across occupations and countries.</p>
+    <div class="search">
+      <input id="job" placeholder="Search an occupation...">
+      <button onclick="searchJob()">Search</button>
+    </div>
+    <p>Find salary information and explore career opportunities.</p>
+  </main>
+  <footer>© 2026 OccupationPay. All rights reserved.</footer>
+  <script>
+    function searchJob() {
+      const job = document.getElementById('job').value.trim();
+      if (job) {
+        alert('Salary search for: ' + job + '. Coming soon!');
+      }
+    }
+  </script>
+</body>
+</html>
