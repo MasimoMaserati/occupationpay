@@ -2,181 +2,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Discover salary information for jobs around the world. Compare pay by occupation and country with OccupationPay.">
-  <title>OccupationPay – Discover What Every Job Pays</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #172033;
-      background: #f7f9fc;
-    }
-    header {
-      padding: 22px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: white;
-      border-bottom: 1px solid #e8edf4;
-    }
-    .logo { font-size: 25px; font-weight: 800; color: #155eef; }
-    nav a {
-      margin-left: 24px;
-      color: #475467;
-      text-decoration: none;
-      font-size: 14px;
-    }
-    .hero {
-      text-align: center;
-      padding: 100px 20px 85px;
-      background: linear-gradient(135deg, #eef4ff, #ffffff);
-    }
-    .hero h1 {
-      max-width: 800px;
-      margin: 0 auto 20px;
-      font-size: clamp(36px, 6vw, 58px);
-      line-height: 1.1;
-    }
-    .hero p {
-      color: #667085;
-      font-size: 18px;
-      line-height: 1.6;
-    }
-    .search {
-      display: flex;
-      max-width: 620px;
-      margin: 35px auto 15px;
-      padding: 7px;
-      background: white;
-      border: 1px solid #d0d5dd;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px #10182812;
-    }
-    .search input {
-      flex: 1;
-      min-width: 0;
-      padding: 14px;
-      border: 0;
-      outline: none;
-      font-size: 16px;
-    }
-    .search button {
-      padding: 14px 23px;
-      border: 0;
-      border-radius: 8px;
-      background: #155eef;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .section {
-      max-width: 1050px;
-      margin: 65px auto;
-      padding: 0 22px;
-      text-align: center;
-    }
-    .section h2 { font-size: 30px; }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 18px;
-      margin-top: 30px;
-    }
-    .card {
-      padding: 25px;
-      background: white;
-      border: 1px solid #e4e7ec;
-      border-radius: 12px;
-      text-align: left;
-    }
-    .card h3 { margin-top: 0; }
-    .card p { color: #667085; line-height: 1.5; }
-    footer {
-      padding: 30px 20px;
-      text-align: center;
-      color: #667085;
-      background: white;
-      border-top: 1px solid #e8edf4;
-    }
-    @media(max-width: 600px) {
-      nav { display: none; }
-      .hero { padding-top: 70px; }
-      .search button { padding: 12px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Search and compare salaries for 830 occupations across the United States. Discover average and median wages with OccupationPay.">
+<title>OccupationPay – US Salary Database</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:#172033;background:#f7f9fc}
+header{padding:22px 7%;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid #e8edf4}
+.logo{font-size:25px;font-weight:800;color:#155eef}
+nav a{margin-left:24px;color:#475467;text-decoration:none;font-size:14px}
+.hero{text-align:center;padding:85px 20px;background:linear-gradient(135deg,#eef4ff,#fff)}
+.hero h1{max-width:800px;margin:0 auto 20px;font-size:clamp(36px,6vw,58px);line-height:1.1}
+.hero p{color:#667085;font-size:18px;line-height:1.6}
+.search{display:flex;max-width:650px;margin:32px auto 12px;padding:7px;background:white;border:1px solid #d0d5dd;border-radius:12px;box-shadow:0 8px 30px #10182812}
+.search input{flex:1;min-width:0;padding:14px;border:0;outline:none;font-size:16px}
+.search button{padding:14px 24px;border:0;border-radius:8px;background:#155eef;color:white;font-weight:bold;cursor:pointer}
+.section{max-width:1050px;margin:55px auto;padding:0 22px}
+.section h2{text-align:center;font-size:28px}
+#status{text-align:center;color:#667085;font-size:14px;margin:20px}
+#results{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:25px}
+.result{background:white;border:1px solid #e4e7ec;border-radius:12px;padding:22px}
+.result h3{margin:0 0 8px;font-size:19px}
+.code{font-size:12px;color:#667085}
+.salary{font-size:26px;font-weight:bold;color:#155eef;margin:15px 0 5px}
+.details{color:#667085;font-size:14px;line-height:1.8}
+.empty{text-align:center;color:#667085;padding:35px}
+footer{padding:30px 20px;text-align:center;color:#667085;background:white;border-top:1px solid #e8edf4}
+@media(max-width:600px){nav{display:none}.hero{padding-top:65px}.search button{padding:12px}}
+</style>
 </head>
 <body>
-  <header>
-    <div class="logo">OccupationPay</div>
-    <nav>
-      <a href="#explore">Explore Careers</a>
-      <a href="#about">About</a>
-    </nav>
-  </header>
+<header>
+<div class="logo">OccupationPay</div>
+<nav>
+<a href="#search-section">Find Salaries</a>
+<a href="#about">About</a>
+</nav>
+</header>
 
-  <main>
-    <section class="hero">
-      <h1>Discover What Every Job Pays</h1>
-      <p>Explore salaries, compare careers and discover earning potential around the world.</p>
+<main>
+<section class="hero">
+<h1>Discover What Every Job Pays</h1>
+<p>Explore real salary data for hundreds of occupations across the United States.</p>
+<form class="search" id="searchForm">
+<input id="jobSearch" type="search" placeholder="Search a job, e.g. Software Developer..." aria-label="Search occupations">
+<button type="submit">Search</button>
+</form>
+<p style="font-size:13px">Explore 830 occupations using US government wage data.</p>
+</section>
 
-      <form class="search" id="searchForm">
-        <input id="jobSearch" type="search"
-          placeholder="Search a job, e.g. Software Developer..."
-          aria-label="Search occupations">
-        <button type="submit">Search</button>
-      </form>
-      <p style="font-size:13px">Find your next career opportunity with confidence.</p>
-    </section>
+<section class="section" id="search-section">
+<h2>US Salary Database</h2>
+<div id="status">Loading salary database...</div>
+<div id="results"></div>
+</section>
 
-    <section class="section" id="explore">
-      <h2>Explore Career Categories</h2>
-      <p style="color:#667085">Discover salary information across popular industries.</p>
-      <div class="cards">
-        <div class="card">
-          <h3>💻 Technology</h3>
-          <p>Software developers, IT specialists and data analysts.</p>
-        </div>
-        <div class="card">
-          <h3>🏥 Healthcare</h3>
-          <p>Doctors, nurses and healthcare professionals.</p>
-        </div>
-        <div class="card">
-          <h3>📊 Business</h3>
-          <p>Managers, accountants and business analysts.</p>
-        </div>
-        <div class="card">
-          <h3>🔧 Engineering</h3>
-          <p>Engineers, technicians and skilled professionals.</p>
-        </div>
-      </div>
-    </section>
+<section class="section" id="about">
+<h2>Make Smarter Career Decisions</h2>
+<p style="text-align:center;color:#667085;line-height:1.8">
+Compare average and median salaries, hourly wages and employment across occupations in the United States.
+</p>
+</section>
+</main>
 
-    <section class="section" id="about">
-      <h2>Make Smarter Career Decisions</h2>
-      <p style="color:#667085;line-height:1.7">
-        OccupationPay aims to make salary information easier to understand
-        and compare, helping people make informed career decisions.
-      </p>
-    </section>
-  </main>
+<footer>
+© 2026 OccupationPay. Salary data source: US Bureau of Labor Statistics (BLS).
+</footer>
 
-  <footer>
-    © 2026 OccupationPay. All rights reserved.
-  </footer>
+<script>
+let occupations = [];
 
-  <script>
-    document.getElementById("searchForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-      const job = document.getElementById("jobSearch").value.trim();
-      if (!job) {
-        alert("Please enter a job title.");
-        return;
+function parseCSV(text) {
+  const rows = [];
+  let row = [], field = "", quoted = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+
+    if (quoted) {
+      if (c === '"' && text[i + 1] === '"') {
+        field += '"';
+        i++;
+      } else if (c === '"') {
+        quoted = false;
+      } else {
+        field += c;
       }
-      alert("Salary search for: " + job + ". More features coming soon!");
-    });
-  </script>
+    } else if (c === '"') {
+      quoted = true;
+    } else if (c === ',') {
+      row.push(field);
+      field = "";
+    } else if (c === '\n') {
+      row.push(field);
+      rows.push(row);
+      row = [];
+      field = "";
+    } else if (c !== '\r') {
+      field += c;
+    }
+  }
+
+  if (field || row.length) {
+    row.push(field);
+    rows.push(row);
+  }
+
+  return rows;
+}
+
+function money(value) {
+  if (!value || value === '*' || value === '#') return "Not available";
+  const number = Number(String(value).replace(/,/g, ""));
+  return Number.isFinite(number)
+    ? "$" + Math.round(number).toLocaleString("en-US")
+    : "Not available";
+}
+
+function renderResults(items) {
+  const results = document.getElementById("results");
+  results.innerHTML = "";
+
+  if (!items.length) {
+    results.innerHTML = '<div class="empty">No matching occupations found. Try another search.</div>';
+    return;
+  }
+
+  items.forEach(job => {
+    const card = document.createElement("article");
+    card.className = "result";
+
+    const title = document.createElement("h3");
+    title.textContent = job.OCC_TITLE;
+
+    const code = document.createElement("div");
+    code.className = "code";
+    code.textContent = "Occupation code: " + job.OCC_CODE;
+
+    const salary = document.createElement("div");
+    salary.className = "salary";
+    salary.textContent = money(job.A_MEAN);
+
+    const details = document.createElement("div");
+    details.className = "details";
+    details.textContent =
+      "Average annual salary: " + money(job.A_MEAN) +
+      "\nMedian annual salary: " + money(job.A_MEDIAN) +
+      "\nAverage hourly wage: " + money(job.H_MEAN) +
+      "\nMedian hourly wage: " + money(job.H_MEDIAN) +
+      "\nEmployment: " + (job.TOT_EMP || "Not available");
+
+    details.style.whiteSpace = "pre-line";
+
+    card.append(title, code, salary, details);
+    results.appendChild(card);
+  });
+}
+
+async function loadDatabase() {
+  const status = document.getElementById("status");
+
+  try {
+    const response = await fetch("/occupationpay-us.csv");
+
+    if (!response.ok) {
+      throw new Error("Could not load the salary database.");
+    }
+
+    const csv = await response.text();
+    const rows = parseCSV(csv);
+
+    const headers = rows[0].map(h => h.trim());
+
+    occupations = rows.slice(1)
+      .filter(row => row.length >= headers.length)
+      .map(row => {
+        const item = {};
+        headers.forEach((header, i) => {
+          item[header] = row[i] || "";
+        });
+        return item;
+      });
+
+    status.textContent =
+      "Database loaded successfully: " + occupations.length + " occupations.";
+
+    renderResults(occupations.slice(0, 12));
+
+  } catch (error) {
+    status.textContent = "Unable to load salary data. Please try again later.";
+    console.error(error);
+  }
+}
+
+document.getElementById("searchForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  const query = document.getElementById("jobSearch").value.trim().toLowerCase();
+
+  if (!query) {
+    document.getElementById("status").textContent = "Please enter an occupation.";
+    return;
+  }
+
+  const matches = occupations.filter(job =>
+    job.OCC_TITLE.toLowerCase().includes(query)
+  );
+
+  document.getElementById("status").textContent =
+    matches.length + " matching occupations found.";
+
+  renderResults(matches.slice(0, 50));
+});
+
+loadDatabase();
+</script>
 </body>
 </html>
