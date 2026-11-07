@@ -137,11 +137,10 @@ function occupationUrl(job) {
 }
 
 function findOccupation(path) {
-  const match = path.match(/^\/occupation\/(.+)-(\d+)\/?$/);
-  if (!match) return null;
-  const code = match[2];
+  const normalizedPath = path.replace(/\/$/, "");
+
   return occupations.find(job =>
-    job.OCC_CODE.replace(/[^0-9]/g, "") === code
+    occupationUrl(job) === normalizedPath
   ) || null;
 }
 
