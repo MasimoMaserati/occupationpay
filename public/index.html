@@ -133,7 +133,7 @@ function slug(title) {
 function occupationUrl(job) {
   const code = job.OCC_CODE.replace(/[^0-9]/g, "");
   return "/?occupation=" + encodeURIComponent(code);
-function findOccupation(path) {
+function findOccupation() {
   const params = new URLSearchParams(window.location.search);
   const code = params.get("occupation");
 
@@ -265,7 +265,7 @@ async function loadDatabase() {
         return item;
       });
 
-    const job = findOccupation(location.pathname);
+    const job = findOccupation();
 
     if (job) {
       renderDetail(job);
