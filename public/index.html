@@ -200,6 +200,46 @@ if (!canonical) {
 }
 
 canonical.href = url;
+  
+const numericValue = value => {
+  const number = Number(String(value ?? "").replace(/[$,\s]/g, ""));
+  return Number.isFinite(number) && number > 0 ? number : undefined;
+};
+
+const salarySchema = {
+  "@context": "https://schema.org",
+  "@type": "Occupation",
+  "name": title,
+  "occupationalCategory": String(job.OCC_CODE),
+  "occupationLocation": {
+    "@type": "Country",
+    "name": "United States"
+  },
+  "description": title + " salary information in the United States, based on May 2025 BLS wage estimates.",
+  "estimatedSalary": {
+    "@type": "MonetaryAmountDistribution",
+    "name": "Annual salary distribution",
+    "currency": "USD",
+    "duration": "P1Y",
+    "median": numericValue(job.A_MEDIAN),
+    "percentile10": numericValue(job.A_PCT10),
+    "percentile25": numericValue(job.A_PCT25),
+    "percentile75": numericValue(job.A_PCT75),
+    "percentile90": numericValue(job.A_PCT90)
+  }
+};
+
+let schemaScript = document.getElementById("occupation-schema");
+
+if (!schemaScript) {
+  schemaScript = document.createElement("script");
+  schemaScript.id = "occupation-schema";
+  schemaScript.type = "application/ld+json";
+  document.head.appendChild(schemaScript);
+}
+
+schemaScript.textContent = JSON.stringify(salarySchema);
+
 
   document.querySelector('meta[name="description"]').content =
     "Explore " + title + " salary information in the United States, including average pay, median salary, hourly wages and employment.";
