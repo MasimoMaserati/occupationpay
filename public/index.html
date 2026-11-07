@@ -188,9 +188,18 @@ function renderResults(items) {
 function renderDetail(job) {
   const app = document.getElementById("app");
   const title = job.OCC_TITLE;
-  const url = location.origin + location.pathname;
+  const url = location.origin + location.pathname + location.search;
 
   document.title = title + " Salary in the US | OccupationPay";
+  let canonical = document.querySelector('link[rel="canonical"]');
+
+if (!canonical) {
+  canonical = document.createElement("link");
+  canonical.rel = "canonical";
+  document.head.appendChild(canonical);
+}
+
+canonical.href = url;
 
   document.querySelector('meta[name="description"]').content =
     "Explore " + title + " salary information in the United States, including average pay, median salary, hourly wages and employment.";
