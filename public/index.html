@@ -295,6 +295,35 @@ schemaScript.textContent = JSON.stringify(salarySchema);
         <p>Figures represent reported wage estimates, not guaranteed salaries. Actual earnings vary by location, experience, employer and industry.</p>
         <p><strong>Data reference:</strong> May 2025 OEWS estimates. Source: <a href="https://www.bls.gov/oes/" target="_blank" rel="noopener">US Bureau of Labor Statistics</a>.</p>
       </div>
+      <div class="detail-card">
+    <h2>${title} Salary: Understanding the Numbers</h2>
+
+    <p>
+        The median annual salary for ${title} in the United States
+        is ${money(job.A_MEDIAN)}, based on May 2025
+        Occupational Employment and Wage Statistics (OEWS) data
+        published by the U.S. Bureau of Labor Statistics.
+    </p>
+
+    <p>
+        Salary estimates vary across the profession.
+        The 10th percentile is ${money(job.A_PCT10)},
+        while the 90th percentile is ${money(job.A_PCT90)}.
+        These figures illustrate the range of reported annual wages.
+    </p>
+
+    <p>
+        The average annual wage is ${money(job.A_MEAN)},
+        and the estimated employment level is
+        ${job.TOT_EMP || "not available"}.
+    </p>
+
+    <p>
+        These national estimates provide a general overview.
+        Actual salaries may differ depending on location,
+        experience, employer and industry.
+    </p>
+</div>
       <p><a href="/">← Back to occupation search</a></p>
     </div>
   `;
