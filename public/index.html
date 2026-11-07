@@ -4,16 +4,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Search and compare salaries for 830 occupations across the United States. Discover average and median wages with OccupationPay.">
-<title>OccupationPay – US Salary Database</title>
+<meta name="description" content="Explore US salary data by occupation. Compare average pay, median wages and employment with OccupationPay.">
+<title>OccupationPay – Discover What Every Job Pays</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;color:#172033;background:#f7f9fc}
 header{padding:22px 7%;display:flex;justify-content:space-between;align-items:center;background:white;border-bottom:1px solid #e8edf4}
-.logo{font-size:25px;font-weight:800;color:#155eef}
+.logo{font-size:25px;font-weight:800;color:#155eef;text-decoration:none}
 nav a{margin-left:24px;color:#475467;text-decoration:none;font-size:14px}
-.hero{text-align:center;padding:85px 20px;background:linear-gradient(135deg,#eef4ff,#fff)}
-.hero h1{max-width:800px;margin:0 auto 20px;font-size:clamp(36px,6vw,58px);line-height:1.1}
+.hero{text-align:center;padding:75px 20px;background:linear-gradient(135deg,#eef4ff,#fff)}
+.hero h1{max-width:850px;margin:0 auto 20px;font-size:clamp(36px,6vw,56px);line-height:1.1}
 .hero p{color:#667085;font-size:18px;line-height:1.6}
 .search{display:flex;max-width:650px;margin:32px auto 12px;padding:7px;background:white;border:1px solid #d0d5dd;border-radius:12px;box-shadow:0 8px 30px #10182812}
 .search input{flex:1;min-width:0;padding:14px;border:0;outline:none;font-size:16px}
@@ -22,26 +22,40 @@ nav a{margin-left:24px;color:#475467;text-decoration:none;font-size:14px}
 .section h2{text-align:center;font-size:28px}
 #status{text-align:center;color:#667085;font-size:14px;margin:20px}
 #results{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:25px}
-.result{background:white;border:1px solid #e4e7ec;border-radius:12px;padding:22px}
+.result,.detail-card{background:white;border:1px solid #e4e7ec;border-radius:12px;padding:22px}
 .result h3{margin:0 0 8px;font-size:19px}
+.result a{color:#155eef;text-decoration:none}
+.result a:hover{text-decoration:underline}
 .code{font-size:12px;color:#667085}
-.salary{font-size:26px;font-weight:bold;color:#155eef;margin:15px 0 5px}
-.details{color:#667085;font-size:14px;line-height:1.8}
+.salary{font-size:27px;font-weight:bold;color:#155eef;margin:15px 0 5px}
+.details{color:#667085;font-size:14px;line-height:1.9}
 .empty{text-align:center;color:#667085;padding:35px}
+.detail-page{max-width:950px;margin:45px auto;padding:0 22px}
+.breadcrumb{color:#667085;font-size:14px;margin-bottom:25px}
+.breadcrumb a{color:#155eef;text-decoration:none}
+.detail-page h1{font-size:clamp(30px,5vw,44px);margin-bottom:8px}
+.subtitle{color:#667085;line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin:28px 0}
+.stat{background:white;border:1px solid #e4e7ec;border-radius:12px;padding:22px}
+.stat-label{font-size:13px;color:#667085}
+.stat-value{font-size:27px;font-weight:bold;color:#155eef;margin-top:10px}
+.stat-sub{font-size:12px;color:#667085;margin-top:6px}
+.detail-card{margin:18px 0;line-height:1.8}
+.detail-card h2{font-size:21px}
 footer{padding:30px 20px;text-align:center;color:#667085;background:white;border-top:1px solid #e8edf4}
-@media(max-width:600px){nav{display:none}.hero{padding-top:65px}.search button{padding:12px}}
+@media(max-width:600px){nav{display:none}.hero{padding-top:60px}.search button{padding:12px}}
 </style>
 </head>
 <body>
 <header>
-<div class="logo">OccupationPay</div>
+<a class="logo" href="/">OccupationPay</a>
 <nav>
-<a href="#search-section">Find Salaries</a>
-<a href="#about">About</a>
+<a href="/">Find Salaries</a>
+<a href="/#about">About</a>
 </nav>
 </header>
 
-<main>
+<main id="app">
 <section class="hero">
 <h1>Discover What Every Job Pays</h1>
 <p>Explore real salary data for hundreds of occupations across the United States.</p>
@@ -51,13 +65,11 @@ footer{padding:30px 20px;text-align:center;color:#667085;background:white;border
 </form>
 <p style="font-size:13px">Explore 830 occupations using US government wage data.</p>
 </section>
-
-<section class="section" id="search-section">
+<section class="section">
 <h2>US Salary Database</h2>
 <div id="status">Loading salary database...</div>
 <div id="results"></div>
 </section>
-
 <section class="section" id="about">
 <h2>Make Smarter Career Decisions</h2>
 <p style="text-align:center;color:#667085;line-height:1.8">
@@ -82,8 +94,7 @@ function parseCSV(text) {
 
     if (quoted) {
       if (c === '"' && text[i + 1] === '"') {
-        field += '"';
-        i++;
+        field += '"'; i++;
       } else if (c === '"') {
         quoted = false;
       } else {
@@ -92,13 +103,9 @@ function parseCSV(text) {
     } else if (c === '"') {
       quoted = true;
     } else if (c === ',') {
-      row.push(field);
-      field = "";
+      row.push(field); field = "";
     } else if (c === '\n') {
-      row.push(field);
-      rows.push(row);
-      row = [];
-      field = "";
+      row.push(field); rows.push(row); row = []; field = "";
     } else if (c !== '\r') {
       field += c;
     }
@@ -108,7 +115,6 @@ function parseCSV(text) {
     row.push(field);
     rows.push(row);
   }
-
   return rows;
 }
 
@@ -118,6 +124,25 @@ function money(value) {
   return Number.isFinite(number)
     ? "$" + Math.round(number).toLocaleString("en-US")
     : "Not available";
+}
+
+function slug(title) {
+  return title.toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function occupationUrl(job) {
+  return "/occupation/" + slug(job.OCC_TITLE) + "-" + job.OCC_CODE.replace(/[^0-9]/g, "");
+}
+
+function findOccupation(path) {
+  const match = path.match(/^\/occupation\/(.+)-(\d+)\/?$/);
+  if (!match) return null;
+  const code = match[2];
+  return occupations.find(job =>
+    job.OCC_CODE.replace(/[^0-9]/g, "") === code
+  ) || null;
 }
 
 function renderResults(items) {
@@ -133,8 +158,11 @@ function renderResults(items) {
     const card = document.createElement("article");
     card.className = "result";
 
+    const link = document.createElement("a");
+    link.href = occupationUrl(job);
     const title = document.createElement("h3");
     title.textContent = job.OCC_TITLE;
+    link.appendChild(title);
 
     const code = document.createElement("div");
     code.className = "code";
@@ -148,73 +176,133 @@ function renderResults(items) {
     details.className = "details";
     details.textContent =
       "Average annual salary: " + money(job.A_MEAN) +
-      "\nMedian annual salary: " + money(job.A_MEDIAN) +
-      "\nAverage hourly wage: " + money(job.H_MEAN) +
-      "\nMedian hourly wage: " + money(job.H_MEDIAN) +
-      "\nEmployment: " + (job.TOT_EMP || "Not available");
+      "\nMedian annual salary: " + money(job.A_MEDIAN);
 
     details.style.whiteSpace = "pre-line";
-
-    card.append(title, code, salary, details);
+    card.append(link, code, salary, details);
     results.appendChild(card);
   });
 }
 
-async function loadDatabase() {
-  const status = document.getElementById("status");
+function renderDetail(job) {
+  const app = document.getElementById("app");
+  const title = job.OCC_TITLE;
+  const url = location.origin + location.pathname;
 
+  document.title = title + " Salary in the US | OccupationPay";
+
+  document.querySelector('meta[name="description"]').content =
+    "Explore " + title + " salary information in the United States, including average pay, median salary, hourly wages and employment.";
+
+  app.innerHTML = `
+    <div class="detail-page">
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/">US Salaries</a> / ${title}</div>
+      <h1>${title} Salary in the United States</h1>
+      <p class="subtitle">Explore salary information for ${title} in the United States, based on Bureau of Labor Statistics data.</p>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Average Annual Salary</div>
+          <div class="stat-value">${money(job.A_MEAN)}</div>
+          <div class="stat-sub">Mean annual wage</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Median Annual Salary</div>
+          <div class="stat-value">${money(job.A_MEDIAN)}</div>
+          <div class="stat-sub">Median annual wage</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Average Hourly Wage</div>
+          <div class="stat-value">${money(job.H_MEAN)}</div>
+          <div class="stat-sub">Mean hourly wage</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Median Hourly Wage</div>
+          <div class="stat-value">${money(job.H_MEDIAN)}</div>
+          <div class="stat-sub">Median hourly wage</div>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <h2>Employment Information</h2>
+        <p><strong>Estimated employment:</strong> ${job.TOT_EMP || "Not available"}</p>
+        <p><strong>Occupation code:</strong> ${job.OCC_CODE}</p>
+        <p><strong>Location:</strong> United States</p>
+      </div>
+
+      <div class="detail-card">
+        <h2>Salary Range</h2>
+        <p><strong>10th percentile:</strong> ${money(job.A_PCT10)}</p>
+        <p><strong>25th percentile:</strong> ${money(job.A_PCT25)}</p>
+        <p><strong>Median:</strong> ${money(job.A_MEDIAN)}</p>
+        <p><strong>75th percentile:</strong> ${money(job.A_PCT75)}</p>
+        <p><strong>90th percentile:</strong> ${money(job.A_PCT90)}</p>
+      </div>
+
+      <div class="detail-card">
+        <h2>About This Salary Data</h2>
+        <p>These figures are based on occupational wage estimates published by the US Bureau of Labor Statistics (BLS), Occupational Employment and Wage Statistics program.</p>
+        <p>Figures represent reported wage estimates, not guaranteed salaries. Actual earnings vary by location, experience, employer and industry.</p>
+        <p><strong>Data reference:</strong> May 2025 OEWS estimates. Source: <a href="https://www.bls.gov/oes/" target="_blank" rel="noopener">US Bureau of Labor Statistics</a>.</p>
+      </div>
+      <p><a href="/">← Back to occupation search</a></p>
+    </div>
+  `;
+}
+
+async function loadDatabase() {
   try {
     const response = await fetch("/occupationpay-us.csv");
+    if (!response.ok) throw new Error("Database file not found.");
 
-    if (!response.ok) {
-      throw new Error("Could not load the salary database.");
-    }
-
-    const csv = await response.text();
-    const rows = parseCSV(csv);
-
+    const rows = parseCSV(await response.text());
     const headers = rows[0].map(h => h.trim());
 
     occupations = rows.slice(1)
       .filter(row => row.length >= headers.length)
       .map(row => {
         const item = {};
-        headers.forEach((header, i) => {
-          item[header] = row[i] || "";
-        });
+        headers.forEach((header, i) => item[header] = row[i] || "");
         return item;
       });
 
-    status.textContent =
+    const job = findOccupation(location.pathname);
+
+    if (job) {
+      renderDetail(job);
+      return;
+    }
+
+    if (location.pathname.startsWith("/occupation/")) {
+      document.getElementById("status").textContent = "Occupation not found.";
+      return;
+    }
+
+    document.getElementById("status").textContent =
       "Database loaded successfully: " + occupations.length + " occupations.";
 
     renderResults(occupations.slice(0, 12));
 
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const query = document.getElementById("jobSearch").value.trim().toLowerCase();
+
+      const matches = occupations.filter(job =>
+        job.OCC_TITLE.toLowerCase().includes(query)
+      );
+
+      document.getElementById("status").textContent =
+        matches.length + " matching occupations found.";
+
+      renderResults(matches.slice(0, 50));
+    });
+
   } catch (error) {
-    status.textContent = "Unable to load salary data. Please try again later.";
+    document.getElementById("status").textContent =
+      "Unable to load salary data. Please try again later.";
     console.error(error);
   }
 }
-
-document.getElementById("searchForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-
-  const query = document.getElementById("jobSearch").value.trim().toLowerCase();
-
-  if (!query) {
-    document.getElementById("status").textContent = "Please enter an occupation.";
-    return;
-  }
-
-  const matches = occupations.filter(job =>
-    job.OCC_TITLE.toLowerCase().includes(query)
-  );
-
-  document.getElementById("status").textContent =
-    matches.length + " matching occupations found.";
-
-  renderResults(matches.slice(0, 50));
-});
 
 loadDatabase();
 </script>
