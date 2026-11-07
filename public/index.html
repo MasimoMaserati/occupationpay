@@ -130,6 +130,7 @@ function slug(title) {
   return title.toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  }
 function occupationUrl(job) {
   const code = job.OCC_CODE.replace(/[^0-9]/g, "");
   return "/?occupation=" + encodeURIComponent(code);
