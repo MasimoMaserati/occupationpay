@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Explore salaries, compare occupations and discover how much different jobs pay around the world.">
-  <title>OccupationPay – Explore Salaries & Careers</title>
+  <meta name="description" content="Discover salary information for jobs around the world. Compare pay by occupation and country with OccupationPay.">
+  <title>OccupationPay – Discover What Every Job Pays</title>
   <style>
     * { box-sizing: border-box; }
     body {
@@ -14,73 +15,168 @@
       background: #f7f9fc;
     }
     header {
-      padding: 24px 8%;
+      padding: 22px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background: white;
-      border-bottom: 1px solid #e5eaf1;
-      font-size: 23px;
-      font-weight: bold;
+      border-bottom: 1px solid #e8edf4;
     }
-    header span { color: #2563eb; }
-    main {
-      max-width: 1050px;
-      margin: 90px auto;
-      padding: 24px;
+    .logo { font-size: 25px; font-weight: 800; color: #155eef; }
+    nav a {
+      margin-left: 24px;
+      color: #475467;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .hero {
       text-align: center;
+      padding: 100px 20px 85px;
+      background: linear-gradient(135deg, #eef4ff, #ffffff);
     }
-    h1 { font-size: clamp(36px, 6vw, 58px); }
-    main p {
-      color: #64748b;
-      font-size: 19px;
+    .hero h1 {
+      max-width: 800px;
+      margin: 0 auto 20px;
+      font-size: clamp(36px, 6vw, 58px);
+      line-height: 1.1;
+    }
+    .hero p {
+      color: #667085;
+      font-size: 18px;
       line-height: 1.6;
     }
     .search {
-      margin: 35px auto;
-      max-width: 600px;
       display: flex;
-      gap: 10px;
+      max-width: 620px;
+      margin: 35px auto 15px;
+      padding: 7px;
+      background: white;
+      border: 1px solid #d0d5dd;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px #10182812;
     }
-    input {
+    .search input {
       flex: 1;
       min-width: 0;
-      padding: 17px;
-      border: 1px solid #dbe2ec;
-      border-radius: 8px;
+      padding: 14px;
+      border: 0;
+      outline: none;
       font-size: 16px;
     }
-    button {
-      padding: 17px 24px;
-      background: #2563eb;
-      color: white;
+    .search button {
+      padding: 14px 23px;
       border: 0;
       border-radius: 8px;
+      background: #155eef;
+      color: white;
+      font-weight: bold;
       cursor: pointer;
     }
-    footer {
+    .section {
+      max-width: 1050px;
+      margin: 65px auto;
+      padding: 0 22px;
       text-align: center;
-      padding: 30px;
-      color: #64748b;
+    }
+    .section h2 { font-size: 30px; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+    .card {
+      padding: 25px;
+      background: white;
+      border: 1px solid #e4e7ec;
+      border-radius: 12px;
+      text-align: left;
+    }
+    .card h3 { margin-top: 0; }
+    .card p { color: #667085; line-height: 1.5; }
+    footer {
+      padding: 30px 20px;
+      text-align: center;
+      color: #667085;
+      background: white;
+      border-top: 1px solid #e8edf4;
+    }
+    @media(max-width: 600px) {
+      nav { display: none; }
+      .hero { padding-top: 70px; }
+      .search button { padding: 12px; }
     }
   </style>
 </head>
 <body>
-  <header>Occupation<span>Pay</span></header>
+  <header>
+    <div class="logo">OccupationPay</div>
+    <nav>
+      <a href="#explore">Explore Careers</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
   <main>
-    <h1>Discover What Every Job Pays</h1>
-    <p>Explore salaries, compare careers and discover earning potential across occupations and countries.</p>
-    <div class="search">
-      <input id="job" placeholder="Search an occupation...">
-      <button onclick="searchJob()">Search</button>
-    </div>
-    <p>Find salary information and explore career opportunities.</p>
+    <section class="hero">
+      <h1>Discover What Every Job Pays</h1>
+      <p>Explore salaries, compare careers and discover earning potential around the world.</p>
+
+      <form class="search" id="searchForm">
+        <input id="jobSearch" type="search"
+          placeholder="Search a job, e.g. Software Developer..."
+          aria-label="Search occupations">
+        <button type="submit">Search</button>
+      </form>
+      <p style="font-size:13px">Find your next career opportunity with confidence.</p>
+    </section>
+
+    <section class="section" id="explore">
+      <h2>Explore Career Categories</h2>
+      <p style="color:#667085">Discover salary information across popular industries.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>💻 Technology</h3>
+          <p>Software developers, IT specialists and data analysts.</p>
+        </div>
+        <div class="card">
+          <h3>🏥 Healthcare</h3>
+          <p>Doctors, nurses and healthcare professionals.</p>
+        </div>
+        <div class="card">
+          <h3>📊 Business</h3>
+          <p>Managers, accountants and business analysts.</p>
+        </div>
+        <div class="card">
+          <h3>🔧 Engineering</h3>
+          <p>Engineers, technicians and skilled professionals.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <h2>Make Smarter Career Decisions</h2>
+      <p style="color:#667085;line-height:1.7">
+        OccupationPay aims to make salary information easier to understand
+        and compare, helping people make informed career decisions.
+      </p>
+    </section>
   </main>
-  <footer>© 2026 OccupationPay. All rights reserved.</footer>
+
+  <footer>
+    © 2026 OccupationPay. All rights reserved.
+  </footer>
+
   <script>
-    function searchJob() {
-      const job = document.getElementById('job').value.trim();
-      if (job) {
-        alert('Salary search for: ' + job + '. Coming soon!');
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const job = document.getElementById("jobSearch").value.trim();
+      if (!job) {
+        alert("Please enter a job title.");
+        return;
       }
-    }
+      alert("Salary search for: " + job + ". More features coming soon!");
+    });
   </script>
 </body>
 </html>
