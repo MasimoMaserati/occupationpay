@@ -184,7 +184,17 @@ function renderResults(items) {
     results.appendChild(card);
   });
 }
+function findRelatedOccupations(currentJob, limit = 5) {
+    const currentCode = currentJob.OCC_CODE;
+    const prefix = currentCode.split("-")[0];
 
+    return occupations
+        .filter(job =>
+            job.OCC_CODE !== currentCode &&
+            job.OCC_CODE.startsWith(prefix + "-")
+        )
+        .slice(0, limit);
+}
 function renderDetail(job) {
   const app = document.getElementById("app");
   const title = job.OCC_TITLE;
@@ -323,6 +333,18 @@ schemaScript.textContent = JSON.stringify(salarySchema);
         Actual salaries may differ depending on location,
         experience, employer and industry.
     </p>
+</div>
+<div class="detail-card">
+    <h2>Related Occupations</h2>
+    <ul>
+        ${findRelatedOccupations(job).map(related => `
+            <li>
+                <a href="${occupationUrl(related)}">
+                    ${related.OCC_TITLE}
+                </a>
+            </li>
+        `).join("")}
+    </ul>
 </div>
       <p><a href="/">← Back to occupation search</a></p>
     </div>
