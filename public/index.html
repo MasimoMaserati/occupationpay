@@ -130,17 +130,17 @@ function slug(title) {
   return title.toLowerCase()
     .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-}
-
 function occupationUrl(job) {
-  return "/occupation/" + slug(job.OCC_TITLE) + "-" + job.OCC_CODE.replace(/[^0-9]/g, "");
-}
-
+  const code = job.OCC_CODE.replace(/[^0-9]/g, "");
+  return "/?occupation=" + encodeURIComponent(code);
 function findOccupation(path) {
-  const normalizedPath = path.replace(/\/$/, "");
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("occupation");
+
+  if (!code) return null;
 
   return occupations.find(job =>
-    occupationUrl(job) === normalizedPath
+    job.OCC_CODE.replace(/[^0-9]/g, "") === code
   ) || null;
 }
 
