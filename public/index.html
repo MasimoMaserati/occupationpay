@@ -43,6 +43,30 @@ nav a{margin-left:24px;color:#475467;text-decoration:none;font-size:14px}
 .detail-card{margin:18px 0;line-height:1.8}
 .detail-card h2{font-size:21px}
 footer{padding:30px 20px;text-align:center;color:#667085;background:white;border-top:1px solid #e8edf4}
+  .popular-occupations {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.popular-occupations a {
+    display: block;
+    padding: 15px 18px;
+    background: white;
+    border: 1px solid #e4e7ec;
+    border-radius: 10px;
+    color: #155eef;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.popular-occupations a:hover {
+    background: #eef4ff;
+    border-color: #155eef;
+    transform: translateY(-2px);
+}
 @media(max-width:600px){nav{display:none}.hero{padding-top:60px}.search button{padding:12px}}
 </style>
 </head>
